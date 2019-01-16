@@ -1,0 +1,184 @@
+.infographic {
+  position: relative;
+}
+
+.infographic__header {
+  position: relative;
+  display: table;
+  background-color: #1FA1F2;
+  width: 100%;
+}
+
+.infographic__title {
+  position: relative;
+  display: block;
+  margin: 50px auto;
+  z-index: 2;
+  text-align: center;
+  font-family: "TrimPoster-Slender", "trim-poster", sans-serif;
+  font-size: 50px;
+  line-height: 50px;
+  width: 100%;
+  max-width:800px;
+  color: #fff;
+
+  @media screen and (min-width: 600px) {
+    font-size: 70px;
+    line-height: 70px;
+    margin: 100px auto;
+  }
+}
+
+.infographic__subtitle {
+  position: relative;
+  display: block;
+  color: #fff;
+  font-family: "Akkurat", sans-serif;
+  font-size: 20px;
+  line-height: 30px;
+
+  @media screen and (min-width: 600px) {
+    font-size: 30px;
+    line-height: 40px;
+  }
+}
+
+.infographic__header-bg {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  opacity: 0.1;
+  right: 0;
+  bottom: -10px;
+  height: 250px;
+  @media screen and (min-width: 600px) {
+    height: 480px;
+  }
+}
+
+
+.infographic__section-light {
+  background-color: #fff;
+}
+
+.infographic__side-by-side {
+  position: relative;
+  display: block;
+  clear: both;
+  margin-bottom: 40px;
+}
+
+.infographic__text-left,
+.infographic__text-right {
+  display: block;
+  margin-bottom: 40px;
+  @media screen and (min-width: 600px) {
+    width: 50%;
+  }
+}
+
+.infographic__text-left {
+  position: relative;
+  background-color: #1FA1F2;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  margin-bottom: 55px;
+
+  @media screen and (min-width: 600px) {
+    padding: 20px;
+    margin-bottom: 40px;
+  }
+
+  &:after {
+    width: 0;
+    height: 0;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    border-top: 35px solid #1FA1F2;
+    position: absolute;
+    bottom: -35px;
+    left: calc(50% - 16px);
+    display: block;
+    content: " ";
+
+    @media screen and (min-width: 600px) {
+      border-left: 35px solid #1FA1F2;
+      border-right: 0;
+      border-top: 16px solid transparent;
+      border-bottom: 16px solid transparent;
+      bottom: calc(50% - 17px);
+      right: -35px;
+      left: auto;
+    }
+  }
+}
+
+.infographic__text-right {
+  position: relative;
+  margin-bottom: 200px;
+  padding: 10px;
+  position: relative;
+  background-color: #1FA1F2;
+
+  @media screen and (min-width: 600px) {
+    margin-left: 50%;
+    margin-bottom: 40px;
+    padding: 20px;
+  }
+
+  &:after {
+    width: 0;
+    height: 0;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    border-top: 35px solid #1FA1F2;
+    position: absolute;
+    bottom: -35px;
+    left: calc(50% - 16px);
+    display: block;
+    content: " ";
+
+    @media screen and (min-width: 600px) {
+      border-right: 35px solid #1FA1F2;
+      border-left: 0;
+      border-top: 16px solid transparent;
+      border-bottom: 16px solid transparent;
+      bottom: calc(50% - 17px);
+      left: -35px;
+    }
+  }
+}
+
+.infographic__img-right,
+.infographic__img-left {
+  display: block;
+  height: 150px;
+
+  @media screen and (min-width: 600px) {
+    position: absolute;
+    top: 0;
+    width: 50%;
+  }
+
+  img {
+    max-height: 100%;
+  }
+}
+
+.infographic__img-right {
+  right: 0;
+  top: calc(50% - 75px);
+}
+
+.infographic__img-left {
+  position: absolute;
+  bottom: -200px;
+  left: 0;
+  width: 100%;
+  @media screen and (min-width: 600px) {
+    left: 0;
+    width: 50%;
+    top: calc(50% - 75px);
+  }
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Fake News</title>
+<link rel="stylesheet" href="css/styles.min.css">
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://d3js.org/d3.v3.min.js"></script>
+<script src="js/library/TweenMax.min.js"></script>
+<script type="text/javascript" src="js/library/ScrollMagic.min.js"></script>
+<script type="text/javascript" src="js/library/animation.gsap.js"></script>
+<script type="text/javascript" src="js/library/debug.addIndicators.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+
+<body>
+
+  <div class="infographic">
+
+    <div class="infographic__header">
+      <img class="infographic__header-bg" src="/interactive/2018/12/infographic/images/infographic-bg.svg" />
+      <h1 class="infographic__title">How to stop the spread of fake news for the 2020 election campaign
+      </h1>
+
+    </div>
+
+
+    <div class="infographic__section-light">
+
+      <div class="story-text">
+
+        <p>In order to stop the spread of fake news for the 2020 U.S. elections, social media companies may need to limit how frequently its users are allowed to post, said David Lazer, a Distinguished Professor of Political Science and Computer and Information Science at Northeastern who on TK DAY published a new report [LINK TK ONCE PAPER IS PUBLISHED] on fake news during the 2016 election.</p>
+
+        <p>The study, which examined how people shared fake news and how often people were exposed to it on Twitter, found that a massive amount of fake news was produced and consumed by a very small amount of users.</p>
+
+        <p>There is not widespread agreement on what constitutes “fake news.”</p>
+
+        <p>Lazer defines it as a “subgenre of misinformation,” calling it “information regarding the state of the world that’s constructed with disregard of the facts and invokes the symbols of existing truth-tellers. It misinforms by appealing to the very worst of human nature, and undermines truth-tellers at the same time.”</p>
+
+        <p>The researchers also used his definition of fake news sources to guide the study. Lazer defines fake news sources as outlets that “lack the news media’s editorial norms and processes for ensuring the accuracy and credibility of information.” They include among these sources such sites as truthfeed.com, dailycaller.com, and gatewaypundit.com. </p>
+
+        <div class="opacityWrapper">
+          <div class="opacityTrigger"></div>
+          <h2>Fake news vs. real news</h2>
+          <p class="opacity-text">The researchers found that 5 percent of political news generated in 2016 came from fake news sources. On Twitter, 0.1 percent of users shared 80 percent of that fake news. And they shared it with a very concentrated group of users. About 1 percent of users were exposed to 80 percent of the fake news shared on Twitter, the study found.</p>
+
+          <!-- this is basically a gif. Each list item is a frame in the gif-->
+          <ul class="opacityContainer">
+            <li>
+              <img class="opacityImg" src="/interactive/2018/12/infographic/images/pie1.svg" />
+            </li>
+            <li>
+              <img class="opacityImg" src="/interactive/2018/12/infographic/images/pie2.svg" />
+
+            </li>
+          </ul>
+
+        </div><!--opacityWrapper-->
+
+        <p>“You have a really small group of people who just cranked out a ton of stuff, and a small number of people who got exposed to a ton of fake news,” Lazer said. The report calls these groups of people “supersharers” and “superconsumers.”</p>
+
+        <div class="infographic__side-by-side">
+          <p class="infographic__text-left">Lazer and his colleagues found that on a given day leading up to the 2016 election, the average “supersharer” of fake news tweeted 71 times and shared roughly eight political websites, of which roughly two were from fake news sources. For comparison, the average regular user tweeted just once per day.</p>
+          <div class="infographic__img-right">
+            <img src="/interactive/2018/12/infographic/images/woman.svg" />
+          </div>
+        </div>
+
+        <div class="infographic__side-by-side">
+          <div class="infographic__img-left">
+            <img src="/interactive/2018/12/infographic/images/woman.svg" />
+          </div>
+          <p class="infographic__text-right">Similarly, the average “superconsumer” of fake news was exposed to almost 4,700 political websites per day, compared to only 49 for the average regular user.</p>
+        </div>
+
+        <p>To track the prevalence of fake news among people on Twitter, Lazer and his colleagues matched U.S. voter registration records to Twitter accounts. Using this method, the researchers could sift out bot accounts and focus solely on human users. After an additional vetting process, the researchers were left with more than 16,000 accounts linked to real, voting U.S. residents that they used for the study.</p>
+
+        <p>The researchers found that these “supersharers” of fake news sources were people from across the country but “disproportionately aged 50 or above, Republican, and female,” the report reads.</p>
+
+        <p>In general, “superconsumers,” or the people who had high proportions of information from fake news sources in their newsfeeds, were “more likely to be right-leaning,” the report reads. Lazer’s research doesn’t specifically delve into why right-leaning users tend to share and consume more fake news than their left-leaning counterparts. </p>
+
+        <p>Since his research shows that it’s a small group of people who “cranked out a ton” of fake news leading up to the 2016 election, Lazer suggested that one way to curb the spread of fake news in 2020 is to put a limit on the amount of times a user can post in a given amount of time.</p>
+
+        <p>“We’ve found that sharing tons of content is correlated with sharing tons of garbage; this super-sharing disproportionately affects fake news and misinformation,” he said. “If you put a speed limit on how often you can share, it would dramatically cut down the spread of fake news.”</p>
+
+        <p>Other tools, like muting and blocking, are already available to Twitter users, Lazer said. These tools can prevent fake news from ever crossing a user’s screen by cutting off the account that’s sharing it in the first place.</p>
+
+        <p>These solutions will merely stem the flow of fake news, though, Lazer said. He doubts that there’s a way to eliminate fake news entirely.</p>
+
+        <p>“It’s not a problem that’s going to go away,” he said. “It may be a problem that can be managed, and I hope it is. But as long as there are people who believe crazy stuff, they’re going to keep sharing that stuff.”</p>
+
+    </div>
+  </div>
+
+  <!--build:js js/main.min.js -->
+  <script src="js/plugins/scrollmagicControls.js"></script>
+  <script src="js/plugins/scatterplot.js"></script>
+  <!--endbuild-->
+
+</body>
+
+</html>
