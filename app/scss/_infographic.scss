@@ -5,7 +5,7 @@
 .infographic__header {
   position: relative;
   display: table;
-  background-color: #1FA1F2;
+  // background-color: #333;
   width: 100%;
 }
 
@@ -14,18 +14,18 @@
   display: block;
   margin: 50px auto;
   z-index: 2;
-  text-align: center;
+  text-align: left;
   font-family: "TrimPoster-Slender", "trim-poster", sans-serif;
   font-size: 50px;
   line-height: 50px;
   width: 100%;
-  max-width:800px;
-  color: #fff;
+  max-width:700px;
+  color: #333;
 
   @media screen and (min-width: 600px) {
     font-size: 70px;
     line-height: 70px;
-    margin: 100px auto;
+    margin: 40px auto;
   }
 }
 
@@ -58,13 +58,14 @@
 
 
 .infographic__section-light {
-  background-color: #fff;
+  // background-color: #fff;
 }
 
 .infographic__side-by-side {
   position: relative;
   display: block;
   clear: both;
+  margin-top: 40px;
   margin-bottom: 40px;
 }
 
@@ -79,11 +80,12 @@
 
 .infographic__text-left {
   position: relative;
-  background-color: #1FA1F2;
+  background-color: #333;
   padding: 10px;
   box-sizing: border-box;
   border-radius: 3px;
   margin-bottom: 55px;
+  color: #fff;
 
   @media screen and (min-width: 600px) {
     padding: 20px;
@@ -95,21 +97,22 @@
     height: 0;
     border-left: 16px solid transparent;
     border-right: 16px solid transparent;
-    border-top: 35px solid #1FA1F2;
+    border-top: 35px solid #333;
     position: absolute;
     bottom: -35px;
     left: calc(50% - 16px);
     display: block;
     content: " ";
-
+  
     @media screen and (min-width: 600px) {
-      border-left: 35px solid #1FA1F2;
+      border-left: 35px solid #333;
       border-right: 0;
       border-top: 16px solid transparent;
       border-bottom: 16px solid transparent;
       bottom: calc(50% - 17px);
-      right: -35px;
+      right: -27px;
       left: auto;
+      transform: rotate(15deg);
     }
   }
 }
@@ -119,7 +122,8 @@
   margin-bottom: 200px;
   padding: 10px;
   position: relative;
-  background-color: #1FA1F2;
+  background-color: #333;
+  color: #fff;
 
   @media screen and (min-width: 600px) {
     margin-left: 50%;
@@ -132,7 +136,7 @@
     height: 0;
     border-left: 16px solid transparent;
     border-right: 16px solid transparent;
-    border-top: 35px solid #1FA1F2;
+    border-top: 35px solid #333;
     position: absolute;
     bottom: -35px;
     left: calc(50% - 16px);
@@ -140,7 +144,7 @@
     content: " ";
 
     @media screen and (min-width: 600px) {
-      border-right: 35px solid #1FA1F2;
+      border-right: 35px solid #333;
       border-left: 0;
       border-top: 16px solid transparent;
       border-bottom: 16px solid transparent;

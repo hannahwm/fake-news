@@ -1,14 +1,10 @@
+
 .story-text {
   max-width: 700px;
   margin: 0 auto;
-  padding: 20px;
   box-sizing: content-box;
   font-family: $body-font;
   line-height: 1.5;
-  @media screen and (min-width: 600px) {
-    padding: 40px;
-
-  }
 }
 
 .opacityWrapper,
@@ -145,14 +141,28 @@
 
 .numberWrapper {
   text-align: center;
+  background-color: #333;
+  margin: 40px auto;
+  border-radius: 3px;
+
+  &:after {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 100px;
+    height: 100px;
+    display: block;
+    content: "";
+    background: url("/interactive/2019/01/fake-news/images/fake-news.svg") no-repeat center;
+  }
 }
 
 .numberContainer {
   display: block;
   text-align: center;
   position: relative;
-  margin: 100px auto;
-  padding: 80px 0 0;
+  margin: 70px auto 0;
+  padding: 80px 0 40px;
   list-style-type: none;
   // height: 75px;
   box-sizing: border-box;
@@ -166,11 +176,12 @@ p.numberPlaceholder {
   top: 0;
   left: 0;
   width: 100%;
-  height: 75px;
-  background-color: #fff;
+  height: 60px;
+  background-color: #333;
   text-align: center;
-  color: #e84040;
+  color: #fff;
   font-size: 60px;
+  line-height: 60px;
   font-family: $body-font;
   font-weight: bold;
   box-sizing: border-box;
@@ -181,9 +192,19 @@ p.numberPlaceholder {
 .numberText {
   display: block;
   font-family: $body-font;
-  width: 250px;
+  font-size: 18px;
   margin: 0 auto;
-  text-align: left;
+  text-align: center;
+  color: #fff;
+
+  &--before {
+    position: absolute;
+    top: -38px;
+    left: calc(50% - 225px);
+    font-family: $body-font;
+    font-size: 20px;
+    color: #fff;
+  }
 }
 
 .percent {
@@ -203,16 +224,21 @@ p.numberPlaceholder {
   height: 44px;
   box-sizing: border-box;
   text-align: center;
+
+  > p:not(.letterText) {
+    display: none;
+  }
 }
 
 .letterText {
   display: inline-block;
   text-align: center;
   font-size: 20px;
+  line-height: 26px;
   font-family: $body-font;
   box-sizing: border-box;
   margin: 0;
-  color: #e84040;
+  color: #333;
 
   &:before {
     content: "“";

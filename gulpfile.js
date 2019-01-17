@@ -62,7 +62,7 @@ gulp.task('copyJSLibraries', function() {
 
 gulp.task('data', function() {
   return gulp.src('app/data/**/*.csv')
-    .pipe(gulp.dest('dist/data'))
+    .pipe(gulp.dest('dist/interactive/2019/01/fake-news/data'))
     .pipe(browserSync.reload({
       stream: true
     }))
@@ -77,7 +77,7 @@ Note: Remember to only upload the /images folder to your project folder in Wordp
 gulp.task('images', function(){
   return gulp.src('app/images/**/*.+(png|jpg|jpeg|gif|svg)')
   .pipe(cache(imagemin()))
-  .pipe(gulp.dest('dist/interactive/2018/12/infographic/images'))
+  .pipe(gulp.dest('dist/interactive/2019/01/fake-news/images'))
   .pipe(browserSync.reload({
     stream: true
   }))

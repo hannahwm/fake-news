@@ -1,17 +1,65 @@
+.dataviz-wrapper {
+  // position: relative;
+  width: 100vw;
+  height: calc(60vw + 40px);
+  margin-top: 40px;
+  margin-bottom: 40px;
+  padding: 50px 0;
+
+}
+
+.dataviz-inner {
+  position: absolute;
+  left: 0;
+  background-color: #333;
+  width: 100vw;
+  height: calc(60vw + 40px);
+}
+
+.dataviz {
+  width: 80vw;
+  height: 60vw;
+  margin: 0 auto;
+}
+
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: #ccc;
   shape-rendering: crispEdges;
+
+}
+.x2 path,
+.x2 line {
+  stroke: rgba(255,255,255,0.2);
 }
 
-.dot {
-  stroke: #000;
+.axis text {
+  fill: #ccc;
+  font-size: 12px;
+}
+
+.x2 text {
+  font-size: 16px;
+  fill: #fff;
+  font-weight: bold;
 }
 
 .tooltip {
   position: absolute;
-  width: 200px;
-  height: 28px;
+  width: 100px;
   pointer-events: none;
+  background-color: rgba(0,0,0,0.8);
+  color: #fff;
+  border-radius: 3px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-family: $body-font;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.legend text {
+  fill: #ccc;
+  font-size: 12px;
 }

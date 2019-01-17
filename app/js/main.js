@@ -1,8 +1,12 @@
+var $ = jQuery;
+
 $(document).ready( function() {
 
-  var margin = {top: 20, right: 20, bottom: 30, left: 40},
-      width = 960 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+  var container = $(".dataviz"),
+      margin = {top: 0, right: 50, bottom: 30, left: 40},
+      padding = {top: 80, right: 0, bottom: 0, left: 0},
+      width = container.width() - margin.left - margin.right,
+      height = container.height() - margin.top - margin.bottom;
 
   /*
    * value accessor - returns the value to encode for a given data object.
@@ -18,74 +22,77 @@ $(document).ready( function() {
       xMap = function(d) { return xScale(xValue(d));}, // data -> display
       xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 
+
+  // setup second x axis
+  var x2Value = function(d) { return d.Age;}, // data -> value
+      x2Scale = d3.scale.linear().range([0, width]), // value -> display
+      x2Map = function(d) { return x2Scale(x2Value(d));}, // data -> display
+      x2Axis = d3.svg.axis().scale(x2Scale).orient("bottom").ticks("0");
+
   // setup y
-  var yValue = function(d) { return d["Shares"];}, // data -> value
-      yScale = d3.scale.linear().range([height, 0]), // value -> display
+  var yValue = function(d) { return d.Shares;}, // data -> value
+      yScale = d3.scale.linear().range([(height - padding.top - margin.top - 40), 0]), // value -> display
       yMap = function(d) { return yScale(yValue(d));}, // data -> display
       yAxis = d3.svg.axis().scale(yScale).orient("left");
 
-
-
   // add the graph canvas to the body of the webpage
-  var svg = d3.select("body").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var svg = d3.select(".dataviz").append("svg")
+      // .attr("width", width + margin.left + margin.right)
+      // .attr("height", height + margin.top + margin.bottom + padding.top)
+      .attr("width", "100%")
+      .attr("height", "100%")
+      .attr('viewBox','0 0 '+width+' '+height)
+      .attr('preserveAspectRatio','xMinYMin')
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + padding.top + ")");
+        // .attr("transform", "translate(" + Math.min(width,height) / 2 + "," + Math.min(width,height) / 2 + ")");
 
   // add the tooltip area to the webpage
   var tooltip = d3.select("body").append("div")
       .attr("class", "tooltip")
       .style("opacity", 0);
 
-  // symbol generators
-  var symbolTypes = {
-      "triangleDown": d3.svg.symbol().type("triangle-down"),
-      "circle": d3.svg.symbol().type("circle")
-  };
-
   // load data
-  d3.csv("../data/cereal.csv", function(error, data) {
-    // var totalDots = [];
-    //
-    // for (var i = 0; i<data.length; i++) {
-    //   totalDots.push(data[i].Age);
-    // }
+  d3.csv("interactive/2019/01/fake-news/data/cereal.csv", function(error, data) {
 
     var legendVals = ["Female", "Male", "White", "Non-white", "Conservative", "Liberal"];
-
-    // setup fill color
-    var cValue = function(d) { return d["Cereal Name"];};
-    // color = "red";
-    var color = d3.scale
-    .linear()
-    .domain([0, 50])
-    .range(["#87CEFF", "#0000FF"]);
-
 
     // console.log(data);
     // change string (from CSV) into number format
     data.forEach(function(d) {
       d.Age = +d.Age;
-      d["Shares"] = +d["Shares"];
+      d.Shares = +d.Shares;
      // console.log(d);
     });
 
     // don't want dots overlapping axis, so add in buffer to data domain
-    xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
-    yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
+    xScale.domain([d3.min(data, xValue)-2, d3.max(data, xValue)+2]);
+    x2Scale.domain([d3.min(data, x2Value)-2, d3.max(data, x2Value)+2]);
+    yScale.domain([d3.min(data, yValue)-2, d3.max(data, yValue)+2]);
 
     // x-axis
     svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(0," + (height - padding.top - margin.top - 40) + ")")
         .call(xAxis)
       .append("text")
         .attr("class", "label")
         .attr("x", width)
-        .attr("y", -6)
+        .attr("y", "-1%")
         .style("text-anchor", "end")
         .text("Age");
+
+    // x2-axis
+    svg.append("g")
+        .attr("class", "x2 axis")
+        .attr("transform", "translate(0," + height/3.18 + ")")
+        .call(x2Axis)
+      .append("text")
+        .attr("class", "label")
+        .attr("x", 10)
+        .attr("y", -15)
+        .style("text-anchor", "start")
+        .text("More than X shares per day");
 
     // y-axis
     svg.append("g")
@@ -106,10 +113,12 @@ $(document).ready( function() {
       .on("mouseover", function(d) {
           tooltip.transition()
                .duration(200)
-               .style("opacity", .9);
-          tooltip.html(d["Cereal Name"] + "<br/> (" + xValue(d)
-          + ", " + yValue(d) + ")")
-               .style("left", (d3.event.pageX + 5) + "px")
+               .style("opacity", .9)
+               .attr("class", "tooltip");
+          tooltip.html(d.Gender + "<br/>" + d.Race + "<br/>"
+          + "Age: " + d.Age + "<br/>" + d.pol_view + "<br/>"
+          + "Shares: " + d.Shares)
+               .style("left", (d3.event.pageX + 10) + "px")
                .style("top", (d3.event.pageY - 28) + "px");
       })
       .on("mouseout", function(d) {
@@ -120,7 +129,14 @@ $(document).ready( function() {
     // draw dots
     circleWrapper.append("circle")
         .attr("class", "dot")
-        .attr("r", 4.5)
+        // .attr("r", 3.5)
+        .attr("r", function(d,i){
+            if (d.Gender !== "male"){
+                return 2.5;
+            }else{
+                return 3.5;
+            }
+        })
         // .attr("transform", function(d) {
         //     return "translate(" + xMap(d) + "," + yMap(d) + ")";
         // })
@@ -129,22 +145,22 @@ $(document).ready( function() {
         //liberal or conservative
         .style("fill", function(d,i){
             if (d.pol_view !== "liberal"){
-                return "red";
+                return "#ff3333";
             }else{
-                return "blue";
+                return "#3e82ff";
             }
         })
         .style("stroke", function(d,i){
             if (d.pol_view !== "liberal"){
-                return "red";
+                return "#ff3333";
             } else {
-                return "blue";
+                return "#3e82ff";
             }
         })
-        //This will be white or non-white
-        .style("stroke-width", 2)
+        //Race
+        .style("stroke-width", 1)
         .style("fill-opacity", function(d,i){
-            if (d["Display Shelf"] !== "3"){
+            if (d.Race !== "white"){
                 return 1;
             }else{
                 return 0;
@@ -154,7 +170,7 @@ $(document).ready( function() {
     //second circle for females
     circleWrapper.append("circle")
         .attr("class", "outer-circle")
-        .attr("r", 8.5)
+        .attr("r", 5)
         // .attr("transform", function(d) {
         //     return "translate(" + xMap(d) + "," + yMap(d) + ")";
         // })
@@ -163,32 +179,93 @@ $(document).ready( function() {
         .style("fill-opacity", 0)
         .style("stroke", function(d,i){
             if (d.pol_view !== "liberal"){
-                return "red";
+                return "#ff3333";
             } else {
-                return "none";
+                return "#3e82ff";
             }
         })
         .style("stroke-width", function(d,i){
-            if (d["Serving Size Weight"] !== "1"){
+            if (d.Gender !== "female"){
                 return 0;
             } else {
-                return 2;
+                return 1;
             }
         });
 
     // draw legend
+    var topPos,
+        leftPos;
     var legend = svg.selectAll(".legend")
         .data(legendVals)
       .enter().append("g")
         .attr("class", "legend")
-        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+        .attr("transform", function(d, i) {
+          if ( (d === "Female") || (d === "Male") ) {
+            leftPos = -(container.width()/4);
+          } else if ( (d === "Non-white") || (d === "White") ) {
+            leftPos = -((container.width()) - (container.width()/2));
+          } else {
+            leftPos = -container.width()/30;
+          }
+          if ( (d === "Female") || (d === "White") || (d === "Conservative") ) {
+            topPos = container.height()/22;
+          } else {
+            topPos = container.height()/14;
+          }
+          return "translate(" + leftPos + "," + ( topPos - padding.top ) + ")";
+        });
 
-    // draw legend colored rectangles
-    legend.append("rect")
-        .attr("x", width - 18)
-        .attr("width", 18)
-        .attr("height", 18)
-        .style("fill", color);
+    // draw legend
+    legend.append("circle")
+        .attr("r", function(d) {
+          if (d === "Female"){
+              return 2.5;
+          } else {
+            return 4.5;
+          }
+        })
+        .attr("cy",10)
+        .attr("cx", "calc(100% - 70px)")
+        .style("stroke", function(d) {
+          if (d === "Liberal"){
+              return "#3e82ff";
+          } else if (d === "Conservative") {
+            return "#ff3333";
+          } else {
+            return "#cccccc";
+          }
+        })
+        .style("fill", function(d) {
+          if (d === "Liberal"){
+              return "#3e82ff";
+          } else if (d === "Conservative") {
+            return "#ff3333";
+          } else {
+            return "#cccccc";
+          }
+        })
+        .style("fill-opacity", function(d) {
+          if (d === "White" || d === "Female" || d === "Male"){
+            return 0;
+          } else {
+            return 1;
+          }
+        });
+
+    //second circle for female
+    legend.append("circle")
+        .attr("r", 5.5)
+        .attr("cy",10)
+        .attr("cx", "calc(100% - 70px)")
+        .style("stroke", "#cccccc")
+        .style("stroke-width", function(d) {
+          if (d === "Female"){
+            return 1;
+          } else {
+            return 0;
+          }
+        })
+        .style("fill-opacity", 0);
 
     // draw legend text
     legend.append("text")
@@ -213,22 +290,13 @@ var $ = jQuery;
   };
 
   $.fn.scrollmagicControls.options = {
-      scaleWrapper: ".scaleWrapper",
-      scaleContainer: ".scaleContainer",
-      scaleItem: ".scaleImg",
-      scaleSVG: ".scaleSVG",
-      opacityWrapper: ".opacityWrapper",
-      opacityItem: ".opacityContainer li",
       numberWrapper: ".numberWrapper",
       numberContainer: ".numberContainer",
       numberItem: ".number",
       letterWrapper: ".letterWrapper",
       letterContainer: ".letterContainer",
       letterText: ".letterText",
-      letterItem: ".letter",
-      barchartWrapper: ".barchartWrapper",
-      barchartContainer: ".barchart",
-      barchartBars: ".barchart-bars"
+      letterItem: ".letter"
   };
 
   Neu.scrollmagicControls = {
@@ -244,12 +312,6 @@ var $ = jQuery;
       bindElements: function() {
         var self = this;
 
-        self.$scaleWrapper = self.$container.find(self.options.scaleWrapper);
-        self.$scaleContainer = self.$container.find(self.options.scaleContainer);
-        self.$scaleItem = self.$container.find(self.options.scaleItem);
-        self.$scaleSVG = self.$container.find(self.options.scaleSVG);
-        self.$opacityItem = self.$container.find(self.options.opacityItem);
-        self.$opacityWrapper = self.$container.find(self.options.opacityWrapper);
         self.$numberItem = self.$container.find(self.options.numberItem);
         self.$numberWrapper = self.$container.find(self.options.numberWrapper);
         self.$numberContainer = self.$container.find(self.options.numberContainer);
@@ -257,133 +319,10 @@ var $ = jQuery;
         self.$letterText = self.$container.find(self.options.letterText);
         self.$letterWrapper = self.$container.find(self.options.letterWrapper);
         self.$letterContainer = self.$container.find(self.options.letterContainer);
-        self.$barchartWrapper = self.$container.find(self.options.barchartWrapper);
-        self.$barchartContainer = self.$container.find(self.options.barchartContainer);
-        self.$barchartBars = self.$container.find(self.options.barchartBars);
         self.controller = new ScrollMagic.Controller();
-        self.controller2 = new ScrollMagic.Controller();
-
     },
     triggerScrollMagic: function() {
       var self = this;
-
-//scale scene
-      for (i = 0; i < self.$scaleWrapper.length; i++ ) {
-        var total = $(self.options.scaleWrapper).attr("data-total");
-        var container = $(self.options.scaleContainer).eq(i);
-
-        //first check for SVG and add them in dynamically since WP breaks them.
-        var svgDiv = self.$scaleWrapper.find(self.options.scaleSVG);
-        var svgPath = svgDiv.data("svg");
-
-        if (svgPath) {
-          svgDiv.remove();
-
-          for (s = 0; s < total; s++ ) {
-            container.prepend("<div class='scaleImg'>" + svgPath + "</div>")
-          }
-        }  else {
-          svgDiv.remove();
-        }
-
-        var scaleDuration = self.$scaleWrapper.height() * 2;
-
-        var scaleTimeline = new TimelineMax();
-
-        var scaleItem;
-        if (svgPath) {
-          var scaleItem = $(self.options.scaleItem).find("svg");
-        } else {
-          var scaleItem = $(self.options.scaleItem);
-        }
-
-        //size is the amount of items to be filled in
-        var size = $(self.options.scaleWrapper).attr("data-size");
-        var activeColor = $(self.options.scaleWrapper).attr("data-activeColor");
-        var inactiveColor = $(self.options.scaleWrapper).attr("data-inactiveColor");
-
-        for (c = 0; c < scaleItem.length; c++ ) {
-
-          var curItem;
-          if (svgPath) {
-            var curItem = $(self.options.scaleItem).eq(c).find("svg");
-          } else {
-            var curItem = $(self.options.scaleItem).eq(c);
-          }
-
-          if (c < size) {
-            curItem.css("fill", activeColor);
-          } else {
-            curItem.css("fill", inactiveColor);
-          }
-        }
-
-        var opacityhook;
-
-        if ( $(window).width > 600) {
-          opacityhook = 0.9;
-        } else {
-          opacityhook = 0.8;
-        }
-
-        scaleTimeline.staggerFrom(
-          scaleItem,
-          1,
-          {
-            scale: 0,
-            fill: inactiveColor
-          },
-          0.25
-        );
-
-        var scaleScene = new ScrollMagic.Scene({
-          triggerElement: ".scaleTrigger",
-          triggerHook: opacityhook,
-          duration: scaleDuration
-        })
-        .setTween(scaleTimeline)
-        .addIndicators({name: "scale scene", colorStart: "#FF0000", colorEnd: "#FF0000", colorTrigger: "#FF0000"})
-        .addTo(self.controller);
-      }
-//scale scene
-
-
-//opacity scene
-      for (i = 0; i < self.$opacityWrapper.length; i++ ) {
-        var opacityDuration = $(self.options.opacityWrapper).height();
-
-        var opacitytl = new TimelineMax();
-        var opacityItem = self.$opacityItem;
-        var hook;
-
-        if ( $(window).width > 600) {
-          hook = 0.9;
-        } else {
-          hook = 0.9;
-        }
-
-        opacitytl.staggerFrom(
-          opacityItem,
-          0.5,
-          {
-            opacity:0
-          },
-          0.5
-        );
-
-        var opacityScene = new ScrollMagic.Scene({
-          triggerElement: ".opacityTrigger",
-          tweenChanges: true,
-          duration: opacityDuration,
-          reverse: true,
-          triggerHook: hook
-        })
-        .setTween(opacitytl)
-        .addIndicators({name: "opacity scene", colorStart: "#0000FF", colorEnd: "#0000FF", colorTrigger: "#0000FF"})
-        .addTo(self.controller);
-      }
-//opacity scene
-
 
 //number scene
       for (i = 0; i < self.$numberWrapper.length; i++ ) {
@@ -509,54 +448,6 @@ var $ = jQuery;
       }
 //letter scene
 
-//barchart scene
-      for (u = 0; u < self.$barchartWrapper.length; u++ ) {
-        var barchartWrapper = $(self.options.barchartWrapper).eq(u);
-        var barchartTrigger = barchartWrapper.find(".barcharttrigger");
-        var barchartDuration = self.$barchartWrapper.height();
-        var barchartTimeline = new TimelineMax();
-        var barchartItem = $(self.options.barchartBars).find("li");
-
-        for (f = 0; f < barchartItem.length; f++ ) {
-          var curItem = barchartItem.eq(f);
-
-          //size is a percentage of the height of the y scale (10 = 100%)
-          var size = curItem.attr("data-size");
-          var color = curItem.attr("data-color");
-
-          curItem.css({
-            "background-color": color,
-            "height": size
-          });
-        }
-
-        // var barcharthook;
-        //
-        // if ( $(window).width > 600) {
-        //   barcharthook = 0.9;
-        // } else {
-        //   barcharthook = 0.7;
-        // }
-
-        barchartTimeline.staggerFrom(
-          barchartItem,
-          1,
-          {
-            scale: 0
-          },
-          0.25
-        );
-
-        var barchartScene = new ScrollMagic.Scene({
-          triggerElement: barchartTrigger,
-          triggerHook: 0.7,
-          duration: barchartDuration
-        })
-        .setTween(barchartTimeline)
-        .addIndicators({name: "barchart scene", colorStart: "#FF0000", colorEnd: "#FF0000", colorTrigger: "#FF0000"})
-        .addTo(self.controller2);
-      }
-//barchart scene
 
     }
   };
