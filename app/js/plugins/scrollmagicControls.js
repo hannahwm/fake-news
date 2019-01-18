@@ -113,61 +113,63 @@ var $ = jQuery;
       }
 //number scene
 
+if ($(window).width() > 600) {
+  //letter scene
+  for (i = 0; i < self.$letterWrapper.length; i++ ) {
+    var wrapper = self.$letterWrapper[i],
+    container = $(wrapper).find(self.options.letterContainer),
+    numTrigger = $(wrapper).find(self.options.letterTrigger),
+    letterDuration = $(wrapper).height();
 
-//letter scene
-      for (i = 0; i < self.$letterWrapper.length; i++ ) {
-        var wrapper = self.$letterWrapper[i],
-            container = $(wrapper).find(self.options.letterContainer),
-            numTrigger = $(wrapper).find(self.options.letterTrigger),
-            letterDuration = $(wrapper).height();
+    var lettertl = new TimelineMax();
 
-        var lettertl = new TimelineMax();
+    var letterArray = [];
+    var textString = $(self.options.letterText).text();
 
-        var letterArray = [];
-        var textString = $(self.options.letterText).text();
+    container.find("p").html("");
 
-        container.find("p").html("");
+    for ( o = 0; o < textString.length; o++ ) {
+      letter = textString[o];
+      container.find("p").append("<span class='letter'>" + letter + "</span>");
+    }
 
-        for ( o = 0; o < textString.length; o++ ) {
-            letter = textString[o];
-            container.find("p").append("<span class='letter'>" + letter + "</span>");
+    var letterItem = container.find(self.options.letterItem);
+    var stagger = 1/textString.length;
+
+    lettertl.staggerFrom(
+      letterItem,
+      stagger,
+      {
+        display: "none",
+        cycle: {
+          x: ["10", "0"]
         }
+      },
+      stagger
+    );
 
-        var letterItem = container.find(self.options.letterItem);
-        var stagger = 1/textString.length;
+    var letterScene = new ScrollMagic.Scene({
+      triggerElement: wrapper,
+      tweenChanges: true,
+      duration: letterDuration,
+      reverse: true
+    })
+    .setTween(lettertl)
+    // .addIndicators({name: "letter scene " + i, colorStart: "#00FF00", colorEnd: "#00FF00", colorTrigger: "#00FF00"})
+    .addTo(self.controller);
 
-        lettertl.staggerFrom(
-          letterItem,
-          stagger,
-          {
-            display: "none",
-            cycle: {
-              x: ["10", "0"]
-            }
-          },
-          stagger
-        );
+    var fadeTween = TweenMax.fromTo( container, 1, {opacity: 0}, {opacity: 1});
 
-        var letterScene = new ScrollMagic.Scene({
-          triggerElement: wrapper,
-          tweenChanges: true,
-          duration: letterDuration,
-          reverse: true
-        })
-        .setTween(lettertl)
-        // .addIndicators({name: "letter scene " + i, colorStart: "#00FF00", colorEnd: "#00FF00", colorTrigger: "#00FF00"})
-        .addTo(self.controller);
+    var fadeScene = new ScrollMagic.Scene({
+      triggerElement: wrapper,
+      duration: "15%"
+    })
+    .setTween(fadeTween)
+    .addTo(self.controller);
+  }
+  //letter scene
 
-        var fadeTween = TweenMax.fromTo( container, 1, {opacity: 0}, {opacity: 1});
-
-        var fadeScene = new ScrollMagic.Scene({
-          triggerElement: wrapper,
-          duration: "15%"
-        })
-        .setTween(fadeTween)
-        .addTo(self.controller);
-      }
-//letter scene
+}
 
 
     }

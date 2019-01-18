@@ -67,6 +67,13 @@
   clear: both;
   margin-top: 40px;
   margin-bottom: 40px;
+  
+  &:before,
+  &:after {
+    display: table;
+    content: "";
+    clear: both;
+  }
 }
 
 .infographic__text-left,
@@ -177,7 +184,7 @@
 
 .infographic__img-left {
   position: absolute;
-  bottom: -200px;
+  bottom: 0;
   left: 0;
   width: 100%;
   @media screen and (min-width: 600px) {

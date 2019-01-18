@@ -147,13 +147,20 @@
 
   &:after {
     position: absolute;
-    bottom: -20px;
-    right: -20px;
-    width: 100px;
-    height: 100px;
+    bottom: -40px;
+    right: -15px;
+    width: 80px;
+    height: 80px;
     display: block;
     content: "";
     background: url("/interactive/2019/01/fake-news/images/fake-news.svg") no-repeat center;
+
+    @media screen and (min-width: 600px) {
+      bottom: -20px;
+      right: -20px;
+      width: 100px;
+      height: 100px;
+    }
   }
 }
 
@@ -180,30 +187,45 @@ p.numberPlaceholder {
   background-color: #333;
   text-align: center;
   color: #fff;
-  font-size: 60px;
-  line-height: 60px;
+  font-size: 40px;
+  line-height: 40px;
   font-family: $body-font;
   font-weight: bold;
   box-sizing: border-box;
   margin: 0;
   text-align: center;
+
+  @media screen and (min-width: 600px) {
+    font-size: 60px;
+    line-height: 60px;
+  }
+
 }
 
 .numberText {
   display: block;
   font-family: $body-font;
-  font-size: 18px;
+  font-size: 14px;
   margin: 0 auto;
   text-align: center;
   color: #fff;
 
+  @media screen and (min-width: 600px) {
+    font-size: 18px;
+  }
+
   &--before {
     position: absolute;
     top: -38px;
-    left: calc(50% - 225px);
+    left: calc(50% - 160px);
     font-family: $body-font;
-    font-size: 20px;
+    font-size: 14px;
     color: #fff;
+
+    @media screen and (min-width: 600px) {
+      font-size: 18px;
+      left: calc(50% - 225px);
+    }
   }
 }
 
@@ -212,18 +234,24 @@ p.numberPlaceholder {
 }
 
 
-.letterWrapper {
+.letterWrapper p.letterText {
   text-align: center;
 }
 
 .letterContainer {
   position: relative;
-  margin: 50px auto;
+  margin: 30px 10px;
   padding: 0;
   list-style-type: none;
-  height: 44px;
+  height: 55px;
   box-sizing: border-box;
   text-align: center;
+
+  @media screen and (min-width: 600px) {
+    margin: 50px auto;
+    height: 44px;
+  }
+
 
   > p:not(.letterText) {
     display: none;
@@ -233,28 +261,45 @@ p.numberPlaceholder {
 .letterText {
   display: inline-block;
   text-align: center;
-  font-size: 20px;
-  line-height: 26px;
+  font-size: 18px;
+  line-height: 24px;
   font-family: $body-font;
   box-sizing: border-box;
   margin: 0;
   color: #333;
 
+  @media screen and (min-width: 600px) {
+    font-size: 20px;
+    line-height: 26px;
+  }
+
   &:before {
     content: "“";
-    font-size: 40px;
+    font-size: 30px;
+
+    @media screen and (min-width: 600px) {
+      font-size: 40px;
+    }
   }
   &:after {
     content: "”";
-    font-size: 40px;
+    font-size: 30px;
+
+    @media screen and (min-width: 600px) {
+      font-size: 40px;
+    }
   }
 }
 
 .letter {
   display: inline-block;
   min-width: 5px;
-  font-size: 20px;
+  font-size: 16px;
   font-family: $body-font;
+
+  @media screen and (min-width: 600px) {
+    font-size: 20px;
+  }
 }
 
 .barchartWrapper {

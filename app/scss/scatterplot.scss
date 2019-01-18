@@ -1,11 +1,15 @@
 .dataviz-wrapper {
   // position: relative;
   width: 100vw;
-  height: calc(60vw + 40px);
+  height: calc(70vw + 40px);
   margin-top: 40px;
   margin-bottom: 40px;
   padding: 50px 0;
 
+  @media screen and (min-width: 600px) {
+    width: 100vw;
+    height: calc(70vw + 40px);
+  }
 }
 
 .dataviz-inner {
@@ -13,13 +17,22 @@
   left: 0;
   background-color: #333;
   width: 100vw;
-  height: calc(60vw + 40px);
+  height: calc(70vw + 40px);
 }
 
 .dataviz {
-  width: 80vw;
-  height: 60vw;
+  width: 90vw;
+  height: 70vw;
   margin: 0 auto;
+
+  @media screen and (min-width: 600px) {
+    width: 80vw;
+  }
+}
+
+.dataviz-title {
+  font-size: 20px;
+  fill: #ccc;
 }
 
 .axis path,
@@ -32,6 +45,7 @@
 .x2 path,
 .x2 line {
   stroke: rgba(255,255,255,0.2);
+  stroke-width: 3;
 }
 
 .axis text {
